@@ -106,7 +106,7 @@ impl From<SRgba> for Oklaba {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{testing::assert_approx_eq, SRgba};
+    use crate::testing::assert_approx_eq;
 
     #[test]
     fn test_to_from_srgba() {

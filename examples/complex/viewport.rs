@@ -1,13 +1,5 @@
 use bevy::prelude::*;
 
-/// A marker component for our shapes so we can query them separately from the ground plane
-#[derive(Component)]
-struct Shape;
-
-/// Marker which identifies the primary camera.
-#[derive(Component)]
-pub struct PrimaryCamera;
-
 /// Used to create margins around the viewport so that side panels don't overwrite the 3d scene.
 #[derive(Default, Resource, PartialEq)]
 pub struct ViewportInset {

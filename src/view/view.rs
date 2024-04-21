@@ -1,11 +1,8 @@
 use std::{cell::Cell, sync::Arc};
 
-use bevy::{
-    prelude::*,
-    text::{Text, TextStyle},
-};
+use bevy::prelude::*;
 
-use crate::{presenter_state::*, ClassNames, Cx, StyleTuple, ViewHandle, ViewTuple};
+use crate::{presenter_state::*, ClassNames, Cx, StyleTuple, ViewTuple};
 
 use crate::node_span::NodeSpan;
 

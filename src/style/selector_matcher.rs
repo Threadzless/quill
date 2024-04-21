@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy::{ecs::entity::Entity, utils::HashMap};
+use bevy::utils::HashMap;
 use bevy_mod_picking::backend::HitData;
 use bevy_mod_picking::pointer::PointerId;
 

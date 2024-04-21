@@ -5,7 +5,7 @@ use std::f32::consts::PI;
 use bevy::{
     prelude::*,
     render::{
-        camera::{ClearColorConfig, Viewport},
+        camera::Viewport,
         render_asset::RenderAssetUsages,
         render_resource::{Extent3d, TextureDimension, TextureFormat},
     },

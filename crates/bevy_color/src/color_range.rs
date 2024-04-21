@@ -46,7 +46,7 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{LinearRgba, SRgba};
+    use crate::SRgba;
 
     #[test]
     fn test_color_range() {

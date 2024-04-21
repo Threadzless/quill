@@ -98,6 +98,7 @@ pub struct DemoDialogProps {
 pub struct RequestClose {
     #[target]
     pub target: Entity,
+    #[allow(dead_code)]
     pub id: &'static str,
 }
 

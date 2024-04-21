@@ -286,8 +286,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    use bevy::ecs::world::World;
-
     use super::*;
 
     #[test]

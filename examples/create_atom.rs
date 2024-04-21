@@ -2,9 +2,6 @@
 
 use bevy::prelude::*;
 use bevy_mod_picking::{
-    backends::bevy_ui::BevyUiBackend,
-    events::Click,
-    input::InputPlugin,
     picking_core::{CorePlugin, InteractionPlugin},
     prelude::*,
 };
