@@ -1,11 +1,7 @@
 #![allow(missing_docs)]
 
 use bevy::{
-    asset::AssetPath,
-    log::error,
-    math::Vec3,
-    prelude::Color,
-    ui::{self, ZIndex},
+    asset::AssetPath, log::error, math::Vec3, prelude::Color, sprite::ImageScaleMode, ui::{self, ZIndex}
 };
 
 use crate::{PointerEvents, StyleProp};
@@ -121,6 +117,11 @@ impl StyleBuilder {
             props: Vec::new(),
             selectors: Vec::new(),
         }
+    }
+
+    pub fn image_scale(&mut self, scale: Option<ImageScaleMode>) -> &mut Self {
+        self.props.push(StyleProp::ImageScale(scale));
+        self
     }
 
     pub fn background_image(&mut self, img: Option<AssetPath<'static>>) -> &mut Self {

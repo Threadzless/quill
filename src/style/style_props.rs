@@ -2,8 +2,8 @@
 
 use bevy::{
     asset::AssetPath,
-    ecs::entity::Entity,
-    math::{IVec2, Vec3},
+    // ecs::entity::Entity,
+    // math::{IVec2, Vec3},
     prelude::*,
     ui,
 };
@@ -32,6 +32,8 @@ pub enum StyleProp {
     BackgroundColor(Option<Color>),
     BorderColor(Option<Color>),
     Color(Option<Color>),
+
+    ImageScale(Option<bevy::prelude::ImageScaleMode>),
 
     ZIndex(Option<ui::ZIndex>),
 
@@ -210,6 +212,9 @@ impl StyleSet {
                 StyleProp::BackgroundImage(image) => {
                     computed.image = image.clone();
                 }
+                StyleProp::ImageScale(scale) => {
+                    computed.image_scale = scale.clone();
+                },
                 StyleProp::BackgroundColor(expr) => {
                     computed.background_color = *expr;
                 }
@@ -367,19 +372,19 @@ impl StyleSet {
                 }
 
                 StyleProp::GridTemplateRows(expr) => {
-                    computed.style.grid_template_rows.clone_from(expr);
+                    computed.style.grid_template_rows.clone_from(&expr);
                 }
 
                 StyleProp::GridTemplateColumns(expr) => {
-                    computed.style.grid_template_columns.clone_from(expr);
+                    computed.style.grid_template_columns.clone_from(&expr);
                 }
 
                 StyleProp::GridAutoRows(expr) => {
-                    computed.style.grid_auto_rows.clone_from(expr);
+                    computed.style.grid_auto_rows.clone_from(&expr);
                 }
 
                 StyleProp::GridAutoColumns(expr) => {
-                    computed.style.grid_auto_columns.clone_from(expr);
+                    computed.style.grid_auto_columns.clone_from(&expr);
                 }
 
                 StyleProp::GridRow(expr) => {
@@ -457,7 +462,7 @@ impl StyleSet {
                     computed.translation = Some(*expr);
                 }
 
-                StyleProp::Transition(trans) => computed.transitions.clone_from(trans),
+                StyleProp::Transition(trans) => computed.transitions.clone_from(&trans),
             }
         }
     }

@@ -42,6 +42,7 @@ pub struct ComputedStyle {
 
     // Image properties
     pub image: Option<AssetPath<'static>>,
+    pub image_scale: Option<ImageScaleMode>,
     pub image_handle: Option<Handle<Image>>,
     pub flip_x: bool,
     pub flip_y: bool,
@@ -288,6 +289,19 @@ impl Command for UpdateComputedStyle {
                     ));
                 }
             }
+        }
+
+        match (e.get_mut::<ImageScaleMode>(), self.computed.image_scale) {
+            (Some(mut scale), Some(img_scale)) => {
+                *scale = img_scale;
+            },
+            (Some(_), None) => {
+                e.remove::<ImageScaleMode>();
+            }
+            (None, Some(img_scale)) => {
+                e.insert(img_scale);
+            },
+            (None, None) => { }
         }
 
         // Update outline
