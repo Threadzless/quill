@@ -10,7 +10,7 @@ use crate::{
     ElementClasses, ElementStyles, SelectorMatcher,
 };
 
-use super::style_handle::TextStyles;
+use super::{computed::ComputedImage, style_handle::TextStyles};
 
 #[derive(Resource, Default)]
 pub(crate) struct PreviousFocus(Option<Entity>);
@@ -162,12 +162,16 @@ fn update_element_styles(
             }
 
             if changed {
-                computed.image_handle = computed.image.as_ref().map(|path| {
-                    assets.load_with_settings(path, |s: &mut ImageLoaderSettings| {
-                        s.sampler = ImageSampler::linear()
-                    })
-                });
-
+                computed.image_handle = match computed.image.as_ref() {
+                    None => None,
+                    Some(ComputedImage::Handle(h)) => Some(h.clone()),
+                    Some(ComputedImage::Path(p)) => Some(
+                        assets.load_with_settings(p, |s: &mut ImageLoaderSettings| {
+                            s.sampler = ImageSampler::linear()
+                        })
+                    )
+                };
+                
                 commands.add(UpdateComputedStyle { entity, computed });
             }
         } else if let Some(prev) = prev_text_styles {

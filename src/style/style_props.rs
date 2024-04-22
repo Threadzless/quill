@@ -11,7 +11,7 @@ use bevy::{
 use crate::Cursor;
 
 use super::{
-    builder::StyleBuilder, computed::ComputedStyle, selector::Selector,
+    builder::StyleBuilder, computed::{ComputedImage, ComputedStyle}, selector::Selector,
     selector_matcher::SelectorMatcher, transition::Transition,
 };
 
@@ -29,6 +29,7 @@ pub enum PointerEvents {
 #[derive(Debug, Clone)]
 pub enum StyleProp {
     BackgroundImage(Option<AssetPath<'static>>),
+    BackgroundImageHandle(Option<Handle<Image>>),
     BackgroundColor(Option<Color>),
     BorderColor(Option<Color>),
     Color(Option<Color>),
@@ -210,7 +211,10 @@ impl StyleSet {
         for attr in attrs.iter() {
             match attr {
                 StyleProp::BackgroundImage(image) => {
-                    computed.image = image.clone();
+                    computed.image = image.as_ref().map(|i| ComputedImage::Path(i.clone()));
+                }
+                StyleProp::BackgroundImageHandle(image) => {
+                    computed.image = image.as_ref().map(|h| ComputedImage::Handle(h.clone()));
                 }
                 StyleProp::ImageScale(scale) => {
                     computed.image_scale = scale.clone();

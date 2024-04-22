@@ -41,7 +41,7 @@ pub struct ComputedStyle {
     pub translation: Option<Vec3>,
 
     // Image properties
-    pub image: Option<AssetPath<'static>>,
+    pub image: Option<ComputedImage>,
     pub image_scale: Option<ImageScaleMode>,
     pub image_handle: Option<Handle<Image>>,
     pub flip_x: bool,
@@ -59,6 +59,12 @@ impl ComputedStyle {
     pub fn new() -> Self {
         Self { ..default() }
     }
+}
+
+#[derive(Clone, Debug)]
+pub enum ComputedImage {
+    Handle(Handle<Image>),
+    Path(AssetPath<'static>),
 }
 
 /// Custom command that updates the style of an entity.

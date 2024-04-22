@@ -1,7 +1,7 @@
 #![allow(missing_docs)]
 
 use bevy::{
-    asset::AssetPath, log::error, math::Vec3, prelude::Color, sprite::ImageScaleMode, ui::{self, ZIndex}
+    asset::{AssetPath, Handle}, log::error, math::Vec3, prelude::Color, render::texture::Image, sprite::ImageScaleMode, ui::{self, ZIndex}
 };
 
 use crate::{PointerEvents, StyleProp};
@@ -126,6 +126,11 @@ impl StyleBuilder {
 
     pub fn background_image(&mut self, img: Option<AssetPath<'static>>) -> &mut Self {
         self.props.push(StyleProp::BackgroundImage(img));
+        self
+    }
+
+    pub fn background_image_handle(&mut self, img: Option<Handle<Image>>) -> &mut Self {
+        self.props.push(StyleProp::BackgroundImageHandle(img));
         self
     }
 
