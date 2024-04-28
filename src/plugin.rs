@@ -118,7 +118,7 @@ fn render_views(world: &mut World) {
         // phase 2
         if change_ct > 0 {
             for e in v.drain() {
-                let mut entt = world.entity_mut(e);
+                let Some(mut entt) = world.get_entity_mut(e) else { continue };
                 // Clear tracking lists for presenters to be re-rendered.
                 if let Some(mut tracked_resources) = entt.get_mut::<TrackedResources>() {
                     tracked_resources.data.clear();
