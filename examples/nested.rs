@@ -13,7 +13,7 @@ fn main() {
         .init_resource::<Counter>()
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_plugins((CorePlugin, InputPlugin, InteractionPlugin, BevyUiBackend))
-        .add_plugins(QuillPlugin)
+        .add_plugins(QuillPlugin::default())
         .add_systems(Startup, (setup, setup_view_root))
         .add_systems(Update, (bevy::window::close_on_esc, update_counter))
         .run();

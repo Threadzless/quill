@@ -57,7 +57,7 @@ fn main() {
                 .with_reader(|| Box::new(FileAssetReader::new("crates/bevy_grackle/assets"))),
         )
         .add_plugins((
-            QuillPlugin,
+            QuillPlugin::default(),
             NodeTreePlugin,
             DisclosureTrianglePlugin,
             bevy_grackle::GracklePlugin,

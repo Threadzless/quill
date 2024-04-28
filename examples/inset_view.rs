@@ -26,7 +26,7 @@ fn main() {
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_plugins((CorePlugin, InputPlugin, InteractionPlugin, BevyUiBackend))
         .add_plugins(EventListenerPlugin::<Clicked>::default())
-        .add_plugins(QuillPlugin)
+        .add_plugins(QuillPlugin::default())
         .add_systems(Startup, (setup, setup_view_root))
         .add_event::<Clicked>()
         .add_systems(
