@@ -1,13 +1,12 @@
 use bevy::{
     a11y::Focus,
     prelude::*,
-    render::texture::{ImageLoaderSettings, ImageSampler},
+    render::texture::ImageLoaderSettings,
 };
 use bevy_mod_picking::focus::{HoverMap, PreviousHoverMap};
 
 use crate::{
-    style::{ComputedStyle, UpdateComputedStyle},
-    ElementClasses, ElementStyles, SelectorMatcher,
+    style::{ComputedStyle, UpdateComputedStyle}, ElementClasses, ElementStyles, QuillPlugin, SelectorMatcher
 };
 
 use super::{computed::ComputedImage, style_handle::TextStyles};
@@ -36,6 +35,7 @@ pub(crate) fn update_styles(
     hover_map_prev: Res<PreviousHoverMap>,
     assets: Res<AssetServer>,
     focus: Res<Focus>,
+    plugin: Res<QuillPlugin>,
     mut focus_prev: ResMut<PreviousFocus>,
 ) {
     let matcher = SelectorMatcher::new(
@@ -65,6 +65,7 @@ pub(crate) fn update_styles(
             &assets,
             root_node,
             &TextStyles::default(),
+            &plugin,
             false,
         )
     }
@@ -93,6 +94,7 @@ fn update_element_styles(
     assets: &Res<AssetServer>,
     entity: Entity,
     inherited_styles: &TextStyles,
+    plugin: &QuillPlugin,
     mut inherited_styles_changed: bool,
 ) {
     let mut text_styles = inherited_styles.clone();
@@ -165,11 +167,14 @@ fn update_element_styles(
                 computed.image_handle = match computed.image.as_ref() {
                     None => None,
                     Some(ComputedImage::Handle(h)) => Some(h.clone()),
-                    Some(ComputedImage::Path(p)) => Some(
-                        assets.load_with_settings(p, |s: &mut ImageLoaderSettings| {
-                            s.sampler = ImageSampler::linear()
-                        })
-                    )
+                    Some(ComputedImage::Path(p)) => {
+                        let sampler = plugin.default_sampler.clone();
+                        Some(
+                            assets.load_with_settings(p, move |s: &mut ImageLoaderSettings| {
+                                s.sampler = sampler.clone()
+                            })
+                        )
+                    }
                 };
                 
                 commands.add(UpdateComputedStyle { entity, computed });
@@ -193,6 +198,7 @@ fn update_element_styles(
                 assets,
                 *child,
                 &text_styles,
+                plugin,
                 inherited_styles_changed,
             );
         }

@@ -1,4 +1,4 @@
-use bevy::{prelude::*, utils::HashSet};
+use bevy::{prelude::*, render::texture::ImageSampler, utils::HashSet};
 use bevy_mod_picking::prelude::EventListenerPlugin;
 
 use crate::{
@@ -12,11 +12,19 @@ use crate::{
 };
 
 /// Plugin which initializes the Quill library.
-pub struct QuillPlugin;
+#[derive(Default, Resource)]
+pub struct QuillPlugin {
+    /// What image sampler will be used for any [`Image`] assets loaded
+    /// through the [`StyleBuilder::background_image`]
+    pub default_sampler: ImageSampler,
+}
 
 impl Plugin for QuillPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<PreviousFocus>()
+            .insert_resource(QuillPlugin {
+                default_sampler: self.default_sampler.clone()
+            })
             .add_systems(
                 Update,
                 (
